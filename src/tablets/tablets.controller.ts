@@ -57,3 +57,4 @@ export class TabletsController {
     return this.tabletsService.stats();
   }
 }
+// console.log
