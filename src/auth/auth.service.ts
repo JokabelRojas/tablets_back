@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
-import * as bcrypt from 'bcrypt';
-import { UserDocument } from '../users/schemas/user.schema';
+import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import { verifyPassword } from 'src/common/encrypt'
+import { UsersService } from '../users/users.service'
+import { LoginDto } from './dto/login.dto'
 
 @Injectable()
 export class AuthService {
@@ -11,24 +11,40 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, pass: string): Promise<any> {
-    const user = await this.usersService.findByEmail(email);
-    if (user && await bcrypt.compare(pass, user.password)) {
-      // ✅ ahora puedes usar .toObject() sin error
-      const { password, ...rest } = user.toObject();
-      return rest;
+  private async validateUser(loginDto: LoginDto) {
+    const { email, password: pass } = loginDto
+    const user = await this.usersService.findByEmail(email)
+
+    const userIsValid = user && (await verifyPassword(user.password, pass))
+    if (!userIsValid) throw new BadRequestException('Credenciales incorrectas')
+    const { _id, email: emailUser, role } = user
+    return {
+      user_id: String(_id),
+      emailUser,
+      role,
     }
-    return null;
   }
 
-  async login(user: any): Promise<{ access_token: string }> {
-    const payload = {
-      email: user.email,
-      sub: user._id,
-      role: user.role,
-    };
+  private async getToken(payload: {
+    email: string
+    role: string
+    user_id: string
+  }) {
+    return await this.jwtService.signAsync(payload)
+  }
+
+  async login(loginDto: LoginDto) {
+    const { emailUser, role, user_id } = await this.validateUser(loginDto)
+    const accessToken = await this.getToken({
+      email: emailUser,
+      role,
+      user_id,
+    })
+
     return {
-      access_token: this.jwtService.sign(payload),
-    };
+      message: 'Login exitoso',
+      status: HttpStatus.OK,
+      accessToken,
+    }
   }
 }

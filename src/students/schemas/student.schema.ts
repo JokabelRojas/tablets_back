@@ -1,31 +1,30 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { Document, Types } from 'mongoose'
 
-export type StudentDocument = Student & Document;
+export type StudentDocument = Student & Document
 
 @Schema({ timestamps: true })
-
 export class Student {
   @Prop({ required: true })
-  firstName: string;
+  firstName: string
 
   @Prop({ required: true })
-  lastName: string;
+  lastName: string
 
   @Prop({ required: true })
-  grade: number;
+  grade: number
 
   @Prop({ required: true })
-  section: string;
+  section: string
 
   @Prop({ type: Types.ObjectId, ref: 'Tablet', required: false, default: null })
-  tablet: Types.ObjectId;
+  tablet: Types.ObjectId
 
   @Prop({ type: Types.ObjectId, ref: 'Classroom', required: false })
-  classroom: Types.ObjectId;
+  classroom: Types.ObjectId
 
   @Prop({ default: true })
-  active: boolean;
+  active: boolean
 }
 
-export const StudentSchema = SchemaFactory.createForClass(Student);
+export const StudentSchema = SchemaFactory.createForClass(Student)
