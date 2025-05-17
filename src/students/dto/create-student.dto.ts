@@ -1,25 +1,32 @@
-import { IsString, IsInt, Min, Max, IsMongoId, IsOptional } from 'class-validator';
+import {
+  IsString,
+  IsInt,
+  Min,
+  Max,
+  IsMongoId,
+  IsOptional,
+} from 'class-validator'
 
 export class CreateStudentDto {
   @IsString()
-  firstName: string;
+  firstName: string
 
   @IsString()
-  lastName: string;
+  lastName: string
 
   @IsInt()
   @Min(1)
   @Max(5)
-  grade: number;
+  grade: number
 
   @IsString()
-  section: string;
+  section: string
 
   @IsOptional()
   @IsMongoId()
-  tablet?: string;
+  tablet?: string
 
   @IsOptional()
   @IsMongoId()
-  classroom?: string;
+  classroom?: string
 }

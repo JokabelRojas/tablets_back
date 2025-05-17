@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ClassroomService } from './classroom.service';
-import { CreateClassroomDto } from './dto/create-classroom.dto';
-import { UpdateClassroomDto } from './dto/update-classroom.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common'
+import { ClassroomService } from './classroom.service'
+import { CreateClassroomDto } from './dto/create-classroom.dto'
+import { UpdateClassroomDto } from './dto/update-classroom.dto'
 
 @Controller('classrooms')
 export class ClassroomController {
@@ -9,26 +17,29 @@ export class ClassroomController {
 
   @Post()
   create(@Body() createClassroomDto: CreateClassroomDto) {
-    return this.classroomService.create(createClassroomDto);
+    return this.classroomService.create(createClassroomDto)
   }
 
   @Get()
   findAll() {
-    return this.classroomService.findAll();
+    return this.classroomService.findAll()
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.classroomService.findOne(id);
+    return this.classroomService.findOne(id)
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateClassroomDto: UpdateClassroomDto) {
-    return this.classroomService.update(id, updateClassroomDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateClassroomDto: UpdateClassroomDto,
+  ) {
+    return this.classroomService.update(id, updateClassroomDto)
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.classroomService.remove(id);
+    return this.classroomService.remove(id)
   }
 }
