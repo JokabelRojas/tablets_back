@@ -1,9 +1,5 @@
 import { IsString, IsEmail, MinLength, IsEnum } from 'class-validator'
-
-export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
-}
+import { UserRole } from 'src/common/decorators/roles.decorator'
 
 export class CreateUserDto {
   @IsString()

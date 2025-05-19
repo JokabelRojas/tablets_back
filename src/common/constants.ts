@@ -1,3 +1,3 @@
 export const jwtConstants = {
-  secret: 'supersecreto123', // usa env variables en producción
+  secret: 'supersecreto123',
 }

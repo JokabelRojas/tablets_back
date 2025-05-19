@@ -46,11 +46,13 @@ export class UsersService {
   }
 
   async findByEmail(email: string) {
-    return this.userModel
+    const findEmail = await this.userModel
       .findOne({
         email,
       })
       .exec()
+    if (!findEmail) throw new NotFoundException('Usuario no encontrado')
+    return findEmail
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
