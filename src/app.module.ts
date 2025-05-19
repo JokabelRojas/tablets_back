@@ -5,9 +5,14 @@ import { StudentsModule } from './students/students.module'
 import { TabletsModule } from './tablets/tablets.module'
 import { ClassroomModule } from './classroom/classroom.module'
 import { AuthModule } from './auth/auth.module'
+import { ConfigModule } from '@nestjs/config'
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+
     MongooseModule.forRoot(
       'mongodb+srv://Jokita:Joka123.@cluster0.sdxd75r.mongodb.net/tablet-database?retryWrites=true&w=majority',
     ),

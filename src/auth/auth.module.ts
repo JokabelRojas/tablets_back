@@ -13,7 +13,7 @@ import { JwtStrategy } from './strategy/jwt.strategy'
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '1d' },
+      signOptions: { expiresIn: '5d' },
     }),
   ],
   controllers: [AuthController],

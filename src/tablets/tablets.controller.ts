@@ -13,8 +13,8 @@ import { CreateTabletDto } from './dto/create-tablet.dto'
 import { UpdateTabletDto } from './dto/update-tablet.dto'
 import { AssignTabletDto } from './dto/assign-tablet.dto'
 import { AuthGuard } from '@nestjs/passport'
-import { RolesGuard } from '../auth/guards/roles.guard'
-import { Roles } from '../auth/decorators/roles.decorator'
+// import { RolesGuard } from '../auth/guards/auth.guard'
+import { Roles } from '../common/decorators/roles.decorator'
 
 @Controller('tablets')
 export class TabletsController {
@@ -50,7 +50,7 @@ export class TabletsController {
     return this.tabletsService.delete(id)
   }
 
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  // @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('admin')
   @Get('stats')
   stats() {
